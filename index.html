@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+
+</head>
+
+<body style="height: 1024px;">
+    <button style="position: fixed; top: 0px; left: 45%; right: 45%;">RESET</button>
+    <div id="container"></div>
+    </div>
+    <script>
+        createDivs(16);
+
+        //add recreate button event listener
+        const button = document.querySelector("button");
+        button.addEventListener('click', destoyPad);
+        button.addEventListener('click', recreateDivs);
+
+
+        function createDivs(dimension) {
+            //create the grid on which to place the divs
+            let container = document.querySelector("#container");
+            container.setAttribute('style', `display: grid; grid-template-columns: repeat(${dimension}, 1fr); grid-template-rows: repeat(${dimension}, 1fr); height: 100%; width: 100%; background: pink)`);
+
+            //create the divs as an array.
+            let divs = [];
+            for (let i = 0; i < (dimension ** 2); i++) {
+                let div = document.createElement('div');
+                div.setAttribute('style', 'background: gray; border: none');
+                div.classList.add('inside');
+                divs.push(div);
+                container.appendChild(div);
+            }
+
+            //add the hovering event listener.
+            let divsInside = document.querySelectorAll(".inside");
+            divsInside.forEach(inside => inside.addEventListener('mouseover', changeColor));
+        }
+
+
+        function changeColor(e) {
+            let div = this;
+            div.setAttribute('style', 'background-color: pink');
+            console.log(this);
+        }
+
+
+        function destoyPad(e) {
+            let container = document.querySelector("#container");
+            let divsInside = document.querySelectorAll(".inside");
+            divsInside.forEach(div => container.removeChild(div));
+        }
+
+
+        function recreateDivs(e) {
+            let dimension = prompt("How many squares a side?");
+            createDivs(dimension);
+        }
+    </script>
+</body>
+
+</html>
